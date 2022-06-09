@@ -214,6 +214,9 @@ static void crit_err_hdlr(int sig_num, siginfo_t * info, void * ucontext)
 {
   DEBUG_ERROR("==== FATAL CRASH (%s) ====", BUILD_VERSION);
   DEBUG_ERROR("signal %d (%s), address is %p", sig_num, strsignal(sig_num), info->si_addr);
+#ifndef __NO_INLINE__
+  DEBUG_WARN("inlining is enabled, backtrace may be incomplete");
+#endif
   printBacktrace();
   cleanupCrashHandler();
   abort();
